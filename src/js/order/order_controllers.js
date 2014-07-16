@@ -39,14 +39,6 @@ define(['../application',
                     $scope.products = newProducts;
                     $cookieStore.put('carts', $scope.products);
                     $rootScope.$broadcast('carts.change');
-                    if ($routeParams.id) {
-                        $location.url('#/home');
-                        $rootScope.$broadcast('url.change');
-                    } else {
-                        $location.url('#/order/create');
-                        $rootScope.$broadcast('url.change');
-                    }
-
                 };
                 $scope.checkOut = function (products) {
                     var newProducts = [];
