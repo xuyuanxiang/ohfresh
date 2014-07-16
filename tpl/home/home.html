@@ -1,0 +1,64 @@
+<div id="channelContainer" ng-repeat="channel in channels">
+    <div class="content-block-title">
+        <h3><span class="fa fa-leaf"></span> {{channel.name}}</h3>{{time | amCalendar}}
+    </div>
+    <div class="list-block media-list" ng-repeat="item in channel.items">
+        <ul>
+            <li class="item-divider">
+                {{item.name}}
+            </li>
+            <li class="item-content" ng-repeat="product in item.products">
+                <div class="item-inner">
+                    <img class="item-media-object" ng-src="{{product.code}}">
+
+                    <div class="item-title-row">
+                        <div class="item-title">{{product.name}}</div>
+                        <div class="item-after">
+                            <i class="fa fa-yen price-input">
+                                {{currentProductIns.price * currentProductIns.num}}
+                            </i>
+                        </div>
+                    </div>
+                    <div class="item-subtitle">
+                        <select name="productins"
+                                ng-init="currentProductIns = product.children[0]"
+                                ng-model="currentProductIns"
+                                ng-change="currentProductIns.num = 1"
+                                ng-options="child.name for child in product.children">
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button class="btn-minus"
+                                    ng-click="currentProductIns.num = currentProductIns.num>1?currentProductIns.num-1:currentProductIns.num">
+                                <span class="fa fa-minus"></span>
+                            </button>
+                        </div>
+                        <input ng-init="currentProductIns.num=1" ng-model="currentProductIns.num" class="input"
+                               type="number" min="1"/>
+
+                        <div class="input-group-btn">
+                            <button class="btn-plus" ng-click="currentProductIns.num=currentProductIns.num+1">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="item-text">
+                        <div class="row">
+                            <div class="col-50">
+                                <a ng-click="addToCart(currentProductIns)" class="button button-red btn-cart">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    放入购物车
+                                </a>
+                            </div>
+                            <div class="col-50">
+                                <a ng-click="createOrder(currentProductIns)"
+                                   class="button button-red button-cancel btn-buy">立即购买</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

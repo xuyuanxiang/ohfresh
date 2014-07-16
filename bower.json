@@ -1,0 +1,27 @@
+{
+  "name": "ohfresh",
+  "version": "0.0.1",
+  "authors": [
+    "Chaos Xu (zn徐远翔) <15887805082@qq.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.20",
+    "angular-cookies": "~1.2.20",
+    "angular-route": "~1.2.20",
+    "angular-touch": "~1.2.20",
+    "framework7": "~0.9.2",
+    "jquery": "1.11.0",
+    "fontawesome": "~4.1.0",
+    "requirejs": "~2.1.14",
+    "angular-moment": "~0.7.1"
+  }
+}

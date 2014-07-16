@@ -1,0 +1,53 @@
+<form name="loginForm" class="list-block inset" method="post" ng-submit="loginFormSubmit()">
+    <ul>
+        <li class="item-divider">
+            用户登录
+        </li>
+        <li class="item-content">
+            <div class="item-media">
+                <i class="icon icon-form-name"></i>
+            </div>
+            <div class="item-inner">
+                <div class="item-input" ng-init="accountHasInput = false">
+                    <input type="text" name="account" ng-model="account"
+                           placeholder="手机号/邮箱地址/微信号" autofocus
+                           ng-required="true"
+                           ng-blur="accountHasInput = true"
+                           ng-pattern="/^1[0-9]{10}|[a-z\d]+(\.[a-z\d]+)*@([\da-z](-[\da-z])?)+(\.{1,2}[a-z]+)+|[a-zA-Z]{1}([a-zA-Z0-9]|[._-]){5,19}$/"/>
+                    <span class="error" ng-show="accountHasInput && loginForm.account.$error.required">不能为空！</span>
+                    <span class="error" ng-show="accountHasInput && !loginForm.account.$valid">只能输入手机号，邮箱地址或微信号！</span>
+                </div>
+            </div>
+        </li>
+        <li class="item-content">
+            <div class="item-media">
+                <i class="icon icon-form-password"></i>
+            </div>
+            <div class="item-inner">
+                <div class="item-input" ng-init="passwordHasInput = false">
+                    <input type="password" name="password" ng-model="password"
+                           placeholder="密码" ng-required="true"
+                           ng-blur="passwordHasInput = true"
+                           ng-pattern="/^([a-zA-Z0-9]|[_]){5,19}$/"/>
+                    <span class="error" ng-show="passwordHasInput && loginForm.password.$error.required">不能为空！</span>
+                    <span class="error" ng-show="passwordHasInput && !loginForm.password.$valid">只能输入6-20位可以包含英文字母、数字、“_”的字串！</span>
+                </div>
+            </div>
+        </li>
+        <li class="item-content">
+            <div class="item-inner">
+                <input type="submit" class="button button-submit button-big" value="登录"/>
+            </div>
+        </li>
+        <li class="item-content">
+            <div class="item-inner row">
+                <div class="col-50">
+                    <a class="button button-round external" href="#/customer/register">立即注册</a>
+                </div>
+                <div class="col-50">
+                    <a class="button button-round" href="register.html">忘记密码？</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</form>

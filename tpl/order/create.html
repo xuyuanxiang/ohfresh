@@ -1,0 +1,58 @@
+<div class="content-block-title">
+    我的购物车
+</div>
+<div ng-show="!products || products.length<=0" class="content-block">
+    <div class="content-block-inner">
+        <h4>您还没有选购商品。</h4>
+    </div>
+</div>
+<div ng-show="products && products.length>0" class="list-block media-list">
+    <ul>
+        <li ng-repeat="product in products">
+            <label class="label-checkbox item-content" ng-init="product.checked=product.checked?product.checked:false">
+                <input type="checkbox" name="my-checkbox" ng-model="product.checked">
+
+                <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+                <div class="item-inner">
+                    <div class="item-title-row">
+                        <div class="item-title">{{product.name}}</div>
+                        <div class="item-after">
+                             <span class="fa fa-yen">
+                                {{product.price * product.num}}
+                             </span>
+                            <a ng-click="removeFromCart(product)" style="font-size: 24px;">
+                                &times;
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item-subtitle">数量：</div>
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button class="btn-minus"
+                                    ng-click="product.num = product.num>1?product.num-1:product.num">
+                                <span class="fa fa-minus"></span>
+                            </button>
+                        </div>
+                        <input ng-model="product.num" class="input"
+                               type="number" min="1"/>
+
+                        <div class="input-group-btn">
+                            <button class="btn-plus" ng-click="product.num=product.num+1">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </li>
+        <li class="item-divider" ng-show="total().num>0">
+            合计：<span class="fa fa-yen">{{total().price}}</span>
+        </li>
+        <li class="item-content" ng-show="total().num>0">
+            <div class="item-inner">
+                <a ng-click="checkOut(total().products)"
+                   class="button button-submit button-big">结算(共{{total().num}}件商品)</a>
+            </div>
+        </li>
+    </ul>
+</div>
