@@ -29,21 +29,29 @@ module.exports = function (grunt) {
                 options: {
                     banner: '/*!\n * @overview <%= pkg.name %>\n * @author <%= pkg.author%>\n * @version <%= pkg.version %>\n * @date <%= grunt.template.today("yyyy-mm-dd") %>\n */\n'
                 },
-                files: {
-                    'js/<%= pkg.name %>-<%= pkg.version %>.min.js': [
-                        'src/js/*.js',
-                        'src/js/util/**/*.js',
-                        'src/js/home/**/*.js',
-                        'src/js/user/**/*.js'
-                    ]
-                }
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src',
+                        src: ['js/**/*.js'],
+                        dest: 'dist'
+                    }
+                ]
             },
-            dependences: {
+            dependencies: {
                 files: {
-                    'js/vendor/jquery-jquery.cookie-framework7.min.js': [
+                    'dist/js/vendor/dependencies.min.js': [
+                        'bower_components/modernizr/modernizr.js',
+                        'bower_components/respond/src/respond.js',
                         'bower_components/jquery/dist/jquery.js',
-                        'bower_components/jquery.cookie/jquery.cookie.js',
-                        'bower_components/framework7/dist/js/framework7.js'
+                        'bower_components/framework7/dist/js/framework7.js',
+                        'bower_components/angular/angular.js',
+                        'bower_components/angular-route/angular-route.js',
+                        'bower_components/angular-cookies/angular-cookies.js',
+                        'bower_components/moment/min/moment.min.js',
+                        'bower_components/moment/lang/zh-cn.js',
+                        'bower_components/angular-moment/angular-moment.min.js',
+                        'bower_components/requirejs/require.js'
                     ]
                 }
             }
@@ -56,13 +64,6 @@ module.exports = function (grunt) {
                     'bower_components/fontawesome/css/font-awesome.min.css'
                 ],
                 dest: 'dist/css/<%= pkg.name %>-<%= pkg.version %>-all.min.css'
-            },
-            script: {
-                src: [
-                    'js/vendor/jquery-jquery.cookie-framework7.min.js',
-                    'js/<%= pkg.name %>-<%= pkg.version %>.min.js'
-                ],
-                dest: 'dist/js/<%= pkg.name %>-<%= pkg.version %>-all.min.js'
             }
         },
 
@@ -104,8 +105,20 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/index.html': 'dist_index.html',
-                    'dist/login.html': 'login.html',
-                    'dist/register.html': 'register.html'
+                }
+            },
+            tpl: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                files: {
+                    'dist/tpl/address/list.html': 'tpl/address/list.html',
+                    'dist/tpl/customer/info.html': 'tpl/customer/info.html',
+                    'dist/tpl/customer/login.html': 'tpl/customer/login.html',
+                    'dist/tpl/customer/register.html': 'tpl/customer/register.html',
+                    'dist/tpl/home/home.html': 'tpl/home/home.html',
+                    'dist/tpl/order/create.html': 'tpl/order/create.html'
                 }
             }
         },

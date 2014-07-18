@@ -1,6 +1,6 @@
 define(['../application',
     '../settings'], function (OhFresh, Settings) {
-    angular.module('ohFresh.home.controllers', ['ngRoute', 'ngCookies', 'angularMoment'])
+    angular.module('ohFresh.home.controllers', ['ngRoute', 'ngCookies'])
         .controller('HomeCtrl', ['$scope', '$routeParams', '$cookieStore', '$http', '$rootScope', '$location',
             function ($scope, $routeParams, $cookieStore, $http, $rootScope, $location) {
                 $rootScope.$broadcast('url.change');

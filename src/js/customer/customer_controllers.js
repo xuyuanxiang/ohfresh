@@ -22,11 +22,10 @@ define(['../application',
                         $http.jsonp(url).success(
                             function (data) {
                                 OhFresh.hideIndicator();
-                                if (data.result == 0) {
+                                if (!data || !data.id) {
                                     OhFresh.addNotification({
                                         title: '提示',
-                                        additionalClass: 'loginErrorNotification',
-                                        message: data.message,
+                                        message: '账号或密码输入错误！',
                                         hold: 3000
                                     });
                                 } else {
@@ -34,8 +33,7 @@ define(['../application',
                                     $cookieStore.put('customer', data);
                                     OhFresh.addNotification({
                                         title: '提示',
-                                        additionalClass: 'loginSuccessNotification',
-                                        message: data.message,
+                                        message: '登录成功！',
                                         hold: 2000
                                     });
                                     $rootScope.$broadcast('customer.change');
@@ -76,14 +74,15 @@ define(['../application',
                 $scope.cityChange = function (city) {
                     $scope.counties = city.children || [];
                 };
+                //注册
                 $scope.doRegister = function () {
                     if ($scope.formRegister.$valid) {
                         var url = Settings.registerUrl;
                         url += "&name=" + $scope.name;
                         url += "&mobilephone=" + $scope.mobilephone;
                         url += "&password=" + $scope.password;
-                        url += "&email=" + $scope.email;
-                        url += "&wechatcode=" + $scope.wechatcode;
+                        url += "&email=" + ($scope.email ? $scope.email : '');
+                        url += "&wechatcode=" + ($scope.wechatcode ? $scope.wechatcode : '');
                         url += "&countryId=" + ($scope.country ? $scope.country.id : '');
                         url += "&provinceId=" + ($scope.province ? $scope.province.id : '');
                         url += "&cityId=" + ($scope.city ? $scope.city.id : '');
@@ -92,7 +91,8 @@ define(['../application',
                             + ($scope.province ? $scope.province.name : '')
                             + ($scope.city ? $scope.city.name : '')
                             + ($scope.county ? $scope.county.name : '')
-                            + ($scope.homeaddress);
+                            + ($scope.homeaddress ? $scope.homeaddress : '');
+                        alert(url);
                         OhFresh.showIndicator();
                         $http.jsonp(url).success(function (data) {
                             OhFresh.hideIndicator();

@@ -1,6 +1,6 @@
 <div id="channelContainer" ng-repeat="channel in channels">
     <div class="content-block-title">
-        <h3><span class="fa fa-leaf"></span> {{channel.name}}</h3>{{time | amCalendar}}
+        <h3><span class="fa fa-leaf"></span> {{channel.name}}</h3>
     </div>
     <div class="list-block media-list" ng-repeat="item in channel.items">
         <ul>
@@ -43,20 +43,14 @@
                             </button>
                         </div>
                     </div>
-                    <div class="item-text">
-                        <div class="row">
-                            <div class="col-50">
-                                <a ng-click="addToCart(currentProductIns)" class="button button-red btn-cart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    放入购物车
-                                </a>
-                            </div>
-                            <div class="col-50">
-                                <a ng-click="createOrder(currentProductIns)"
-                                   class="button button-red button-cancel btn-buy">立即购买</a>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="buttons-row">
+                        <a ng-click="addToCart(currentProductIns)" class="button button-red btn-cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            放入购物车
+                        </a>
+                        <a ng-click="createOrder(currentProductIns)"
+                           class="button button-red button-cancel btn-buy">立即购买</a>
+                    </p>
                 </div>
             </li>
         </ul>

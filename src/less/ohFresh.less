@@ -21,12 +21,19 @@
 .input-group {
   border: 1px solid darkgray;
   display: table;
-  height: 32px;
   width: auto;
 }
 
-.input-group .input-group-btn, .input-group .input {
+.input-group .input-group-btn, .input-group select.input {
   display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.input-group .input {
+  text-align: center;
+  width: auto;
 }
 
 .input-group .input-group-btn:first-child {
@@ -38,15 +45,10 @@
 }
 
 .input-group .input-group-btn > button {
-  height: 44px;
-  width: 44px;
   border: 0px;
+  width: 44px;
+  height: 100%;
   background-color: #ffffff;
-}
-
-.input-group .input {
-  text-align: center;
-  width: 100%;
 }
 
 .item-media-object {

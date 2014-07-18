@@ -1,9 +1,10 @@
 require(['./application',
     './home/home_routes',
     './customer/customer_routes',
-    './order/order_routes'
+    './order/order_routes',
+    './address/address_routes'
 ], function (OhFresh) {
-    angular.module('ohFresh', ['ohFresh.home', 'ohFresh.customer', 'ohFresh.order'])
+    angular.module('ohFresh', ['ohFresh.home', 'ohFresh.customer', 'ohFresh.order', 'ohFresh.address'])
         .controller('RootCtrl', ['$scope', '$cookieStore', '$location',
             function ($scope, $cookieStore, $location) {
                 $scope.$on('carts.change', function () {
