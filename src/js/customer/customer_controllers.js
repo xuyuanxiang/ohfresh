@@ -54,26 +54,8 @@ define(['../application',
             }
         ]).controller('RegisterCtrl', ['$scope', '$http', '$cookieStore', '$location', '$rootScope',
             function ($scope, $http, $cookieStore, $location, $rootScope) {
-                var data = {url: '#/customer/login'};
-                $rootScope.$broadcast('back.change', data);
-                $http.jsonp(Settings.locationUrl).success(function (data) {
-                    $scope.countries = angular.fromJson(data) || [];
-                    $scope.provinces = $scope.countries.length > 0 ? $scope.countries[0].children : [];
-                    $scope.cities = $scope.provinces.length > 0 ? $scope.provinces[0].children : [];
-                    $scope.counties = $scope.cities.length > 0 ? $scope.cities[0].children : [];
-                });
-                $scope.countryChange = function (country) {
-                    $scope.provinces = country.children || [];
-                    $scope.cities = $scope.provinces.length > 0 ? $scope.provinces[0].children : [];
-                    $scope.counties = $scope.cities.length > 0 ? $scope.cities[0].children : [];
-                };
-                $scope.provinceChange = function (province) {
-                    $scope.cities = province.children || [];
-                    $scope.counties = $scope.cities.length > 0 ? $scope.cities[0].children : [];
-                };
-                $scope.cityChange = function (city) {
-                    $scope.counties = city.children || [];
-                };
+                $rootScope.$broadcast('back.change', {url: '#/customer/login'});
+
                 //注册
                 $scope.doRegister = function () {
                     if ($scope.formRegister.$valid) {
@@ -92,20 +74,21 @@ define(['../application',
                             + ($scope.city ? $scope.city.name : '')
                             + ($scope.county ? $scope.county.name : '')
                             + ($scope.homeaddress ? $scope.homeaddress : '');
-                        alert(url);
                         OhFresh.showIndicator();
                         $http.jsonp(url).success(function (data) {
                             OhFresh.hideIndicator();
-                            data.password = '';
-                            $cookieStore.put('customer', data);
                             OhFresh.addNotification({
                                 title: '提示',
                                 message: data.message,
                                 hold: 2000
                             });
-                            $rootScope.$broadcast('customer.change');
-                            $location.url('/home');
-                            $rootScope.$broadcast('url.change');
+                            if (data.result == 1) {
+                                data.password = '';
+                                $cookieStore.put('customer', data);
+                                $rootScope.$broadcast('customer.change');
+                                $location.url('/home');
+                                $rootScope.$broadcast('url.change');
+                            }
                         }).error(function () {
                             OhFresh.addNotification({
                                 title: "提示",
@@ -120,6 +103,7 @@ define(['../application',
         ]).controller('InfoCtrl', ['$scope', '$cookieStore', '$location', '$rootScope',
             function ($scope, $cookieStore, $location, $rootScope) {
                 $rootScope.$broadcast('url.change');
+                $rootScope.$broadcast('back.change', null);
                 $scope.customer = $cookieStore.get('customer');
                 if (!$scope.customer) {
                     return $location.url('/customer/login');
@@ -130,7 +114,6 @@ define(['../application',
                     $location.url('/customer/login');
                     $rootScope.$broadcast('url.change');
                 }
-
             }
         ]);
 });

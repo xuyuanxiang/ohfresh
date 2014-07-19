@@ -7,10 +7,13 @@ define(['../application',
                 $scope.customer = $cookieStore.get('customer');
                 if ($scope.customer) {
                     $http.jsonp(Settings.addressQuery + "&customerId=" + $scope.customer.id).success(function (data) {
-                        $scope.addresses = data;
-                        angular.forEach($scope.addresses, function (address) {
-                            $scope.currentAddress = address;
-                        });
+                        $scope.addresses = data || [];
+                        if (!$rootScope.defaultAddress) {
+                            for (var i = 0; i < $scope.addresses.length; i++) {
+                                if ($scope.addresses[i].id = $scope.customer.id)
+                                    $rootScope.defaultAddress = $scope.addresses[i];
+                            }
+                        }
                     });
                 }
                 $rootScope.$broadcast('url.change');
@@ -51,19 +54,18 @@ define(['../application',
                 };
                 $scope.checkOut = function (products) {
                     OhFresh.showIndicator();
-                    var address = $scope.currentAddress;
+                    var address = $rootScope.defaultAddress;
                     var url = Settings.orderCreateUrl;
-                    alert(angular.toJson(products));
                     url += "&products=" + angular.toJson(products);
-                    url += "&name=" + address.name;
-                    url += "&mobilephone=" + address.mobilephone;
-                    url += "&homeaddress=" + address.assemblename;
-                    url += "&customerId=" + $scope.customer.id;
-                    var locationIds = address.locationId ? address.locationId.split('|') : [];
-                    var countryId = "";
-                    var provinceId = "";
-                    var cityId = "";
-                    var countyId = "";
+                    url += "&name=" + ($scope.name ? $scope.name : address.name);
+                    url += "&mobilephone=" + ($scope.mobilephone ? $scope.mobilephone : address.mobilephone);
+                    url += "&homeaddress=" + ($scope.assemblename ? $scope.assemblename : address.assemblename);
+                    url += "&customerId=" + ($scope.customer && $scope.customer.id ? $scope.customer.id : '');
+                    var locationIds = address && address.locationId ? address.locationId.split('|') : [];
+                    var countryId = $scope.country ? $scope.country.id : "";
+                    var provinceId = $scope.province ? $scope.province.id : "";
+                    var cityId = $scope.city ? $scope.city.id : "";
+                    var countyId = $scope.county ? $scope.county.id : "";
                     if (locationIds.length = 4) {
                         countryId = locationIds[0];
                         provinceId = locationIds[1];
@@ -86,36 +88,36 @@ define(['../application',
                     url += "&provinceId=" + provinceId;
                     url += "&cityId=" + cityId;
                     url += "&countyId=" + countyId;
-//                    $http.jsonp(url).success(function (data) {
-//                        OhFresh.hideIndicator();
-//                        if (data && data.result == 1) {
-//                            OhFresh.addNotification({
-//                                title: "提示",
-//                                message: data.message,
-//                                hold: 3000
-//                            });
-//                            var newProducts = [];
-//                            angular.forEach($scope.products, function (oldPro) {
-//                                var flag = true;
-//                                angular.forEach(products, function (newPro) {
-//                                    if (oldPro.id === newPro.id)
-//                                        flag = false;
-//                                });
-//                                if (flag)
-//                                    newProducts.push(oldPro);
-//                            });
-//                            $scope.products = newProducts;
-//                            $cookieStore.put('carts', $scope.products);
-//                            $rootScope.$broadcast('carts.change');
-//                        }
-//                    }).error(function () {
-//                        OhFresh.addNotification({
-//                            title: "提示",
-//                            message: "系统连接失败！请稍后重试...",
-//                            hold: 3000
-//                        });
-//                        OhFresh.hideIndicator();
-//                    });
+                    $http.jsonp(url).success(function (data) {
+                        OhFresh.hideIndicator();
+                        if (data && data.result == 1) {
+                            OhFresh.addNotification({
+                                title: "提示",
+                                message: data.message,
+                                hold: 3000
+                            });
+                            var newProducts = [];
+                            angular.forEach($scope.products, function (oldPro) {
+                                var flag = true;
+                                angular.forEach(products, function (newPro) {
+                                    if (oldPro.id === newPro.id)
+                                        flag = false;
+                                });
+                                if (flag)
+                                    newProducts.push(oldPro);
+                            });
+                            $scope.products = newProducts;
+                            $cookieStore.put('carts', $scope.products);
+                            $rootScope.$broadcast('carts.change');
+                        }
+                    }).error(function () {
+                        OhFresh.addNotification({
+                            title: "提示",
+                            message: "系统连接失败！请稍后重试...",
+                            hold: 3000
+                        });
+                        OhFresh.hideIndicator();
+                    });
                 };
             }
         ]);

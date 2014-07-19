@@ -20,6 +20,14 @@ define(['../application',
                     });
                 });
                 $scope.addToCart = function (productIns) {
+                    if (!productIns.price) {
+                        OhFresh.addNotification({
+                            title: "提示",
+                            message: "请选择要购买的产品类型！",
+                            hold: 3000
+                        });
+                        return;
+                    }
                     var carts = $cookieStore.get('carts') || [];
                     var newCarts = [];
                     var flag = true;
@@ -49,6 +57,14 @@ define(['../application',
                     $rootScope.$broadcast('carts.change');
                 };
                 $scope.createOrder = function (product) {
+                    if (!product.price) {
+                        OhFresh.addNotification({
+                            title: "提示",
+                            message: "请选择要购买的产品类型！",
+                            hold: 3000
+                        });
+                        return;
+                    }
                     var cart = [];
                     cart.push(product);
                     $cookieStore.put('cart', cart);
