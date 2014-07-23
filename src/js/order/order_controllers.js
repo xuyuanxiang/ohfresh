@@ -10,7 +10,7 @@ define(['../application',
                         $scope.addresses = data || [];
                         if (!$rootScope.defaultAddress) {
                             for (var i = 0; i < $scope.addresses.length; i++) {
-                                if ($scope.addresses[i].id = $scope.customer.id)
+                                if ($scope.addresses[i].id = $scope.customer.addressId)
                                     $rootScope.defaultAddress = $scope.addresses[i];
                             }
                         }
@@ -53,41 +53,70 @@ define(['../application',
                     $rootScope.$broadcast('carts.change');
                 };
                 $scope.checkOut = function (products) {
-                    OhFresh.showIndicator();
                     var address = $rootScope.defaultAddress;
                     var url = Settings.orderCreateUrl;
                     url += "&products=" + angular.toJson(products);
                     url += "&name=" + ($scope.name ? $scope.name : address.name);
                     url += "&mobilephone=" + ($scope.mobilephone ? $scope.mobilephone : address.mobilephone);
-                    url += "&homeaddress=" + ($scope.assemblename ? $scope.assemblename : address.assemblename);
                     url += "&customerId=" + ($scope.customer && $scope.customer.id ? $scope.customer.id : '');
                     var locationIds = address && address.locationId ? address.locationId.split('|') : [];
-                    var countryId = $scope.country ? $scope.country.id : "";
-                    var provinceId = $scope.province ? $scope.province.id : "";
-                    var cityId = $scope.city ? $scope.city.id : "";
-                    var countyId = $scope.county ? $scope.county.id : "";
-                    if (locationIds.length = 4) {
+                    var countryId = $scope.country && $scope.country.id ? $scope.country.id : "";
+                    var provinceId = $scope.province && $scope.province.id ? $scope.province.id : "";
+                    var cityId = $scope.city && $scope.city.id ? $scope.city.id : "";
+                    var countyId = $scope.county && $scope.county.id ? $scope.county.id : "";
+                    if (locationIds.length == 4) {
                         countryId = locationIds[0];
                         provinceId = locationIds[1];
                         cityId = locationIds[2];
                         countyId = locationIds[3];
                     }
-                    if (locationIds.length = 3) {
+                    if (locationIds.length == 3) {
                         countryId = locationIds[0];
                         provinceId = locationIds[1];
                         cityId = locationIds[2];
                     }
-                    if (locationIds.length = 2) {
+                    if (locationIds.length == 2) {
                         countryId = locationIds[0];
                         provinceId = locationIds[1];
                     }
-                    if (locationIds.length = 1) {
+                    if (locationIds.length == 1) {
                         countryId = locationIds[0];
                     }
                     url += "&countryId=" + countryId;
                     url += "&provinceId=" + provinceId;
                     url += "&cityId=" + cityId;
                     url += "&countyId=" + countyId;
+                    var homeaddress = $scope.assemblename ? $scope.assemblename : address.assemblename;
+                    if (countryId && !$scope.country) {
+                        angular.forEach($rootScope.countries, function (value) {
+                            if (value.id = countryId)
+                                $scope.country = value;
+                        });
+                    }
+                    if (provinceId && !$scope.province) {
+                        angular.forEach($rootScope.provinces, function (value) {
+                            if (value.id = provinceId)
+                                $scope.province = value;
+                        });
+                    }
+                    if (cityId && !$scope.city) {
+                        angular.forEach($rootScope.cities, function (value) {
+                            if (value.id = cityId)
+                                $scope.city = value;
+                        });
+                    }
+                    if (countyId && !$scope.county) {
+                        angular.forEach($rootScope.counties, function (value) {
+                            if (value.id = countyId)
+                                $scope.county = value;
+                        });
+                    }
+                    homeaddress = (countryId ? $scope.country.name : "")
+                        + (provinceId ? $scope.province.name : "")
+                        + (cityId ? $scope.city.name : "")
+                        + (countyId ? $scope.county.name : "") + homeaddress;
+                    url += "&homeaddress=" + homeaddress;
+                    OhFresh.showIndicator();
                     $http.jsonp(url).success(function (data) {
                         OhFresh.hideIndicator();
                         if (data && data.result == 1) {

@@ -52,7 +52,7 @@
             <input ng-click="edit(null)" type="submit" class="button button-big" value="添加新地址"/>
         </div>
         <!--<div class="col-50">-->
-            <!--<a ng-click="defaultConfig()" class="button button-submit button-big">设置默认地址</a>-->
+        <!--<a ng-click="defaultConfig()" class="button button-submit button-big">设置默认地址</a>-->
         <!--</div>-->
     </div>
 </div>
@@ -159,14 +159,12 @@
                     </div>
                 </div>
             </li>
+            <li class="item-content">
+                <div class="item-inner buttons-row">
+                    <input ng-click="cancel()" type="button" class="button button-cancel button-big" value="取消"/>
+                    <input type="submit" class="button button-submit button-big" value="保存"/>
+                </div>
+            </li>
         </ul>
-        <div class="row" style="margin-top: 10px;">
-            <div class="col-50">
-                <input ng-click="cancel()" type="button" class="button button-cancel button-big" value="取消"/>
-            </div>
-            <div class="col-50">
-                <input type="submit" class="button button-submit button-big" value="保存"/>
-            </div>
-        </div>
     </form>
 </div>

@@ -7,12 +7,12 @@ define(['../application',
                 $scope.customer = $cookieStore.get('customer');
                 if (!$scope.customer)
                     return $location.url('#/customer/login');
-                $scope.backUrl = $routeParams.from ? '#/' + $routeParams.from.replace('.', '/') : '';
-                if ($scope.backUrl) {
-                    $rootScope.$broadcast('back.change', {url: $scope.backUrl});
-                }
-                $rootScope.$on('back.change', {url: '#/customer/info'});
+//                $rootScope.$on('back.change', {url: '#/customer/info'});
                 $scope.list = function () {
+                    $scope.backUrl = $routeParams.from ? '#/' + $routeParams.from.replace('.', '/') : '';
+                    if ($scope.backUrl) {
+                        $rootScope.$broadcast('back.change', {url: $scope.backUrl});
+                    }
                     OhFresh.showPreloader();
                     var url = Settings.addressQuery + "&customerId=" + $scope.customer.id;
                     $http.jsonp(url).success(function (data) {

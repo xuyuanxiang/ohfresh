@@ -135,7 +135,21 @@ module.exports = function (grunt) {
                 files: ['src/img/**'],
                 tasks: ['imagemin']
             }
+        },
+        connect: {
+            server: {
+                options: {
+                    port: 3100,
+                    base: ''
+                }
+            }
+        },
+        open: {
+            kitchen: {
+                path: 'http://localhost:3100/'
+            }
         }
+
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -146,7 +160,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-open');
 
+    grunt.registerTask('server', ['connect', 'open', 'watch']);
     grunt.registerTask('cleanAll', ['clean:product']);
     grunt.registerTask('build', ['clean:less', 'less:develop', 'imagemin', 'copy:develop']);
     grunt.registerTask('publish', ['clean', 'less:product', 'uglify', 'concat', 'imagemin', 'htmlmin', 'copy:product']);

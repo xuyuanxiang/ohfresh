@@ -1,9 +1,17 @@
 define(['../application',
     '../settings'
 ], function (OhFresh, Settings) {
-    angular.module('ohFresh.customer.controllers', ['ngCookies'])
-        .controller('LoginCtrl', ['$scope', '$http', '$location', '$cookieStore', '$rootScope',
-            function ($scope, $http, $location, $cookieStore, $rootScope) {
+    angular.module('ohFresh.customer.controllers', ['ngCookies', 'ngRoute'])
+        .controller('LoginCtrl', ['$scope', '$http', '$location', '$cookieStore', '$rootScope', '$routeParams',
+            function ($scope, $http, $location, $cookieStore, $rootScope, $routeParams) {
+                $scope.currentId = $routeParams.id;
+                $scope.customer = $cookieStore.get('customer');
+                if ($scope.customer) {
+                    $rootScope.$broadcast('url.change');
+                    $location.url('/customer/info');
+                    return;
+                }
+                $rootScope.$broadcast('url.change');
                 $rootScope.$broadcast('url.change');
                 $rootScope.$broadcast('back.change', null);
                 $scope.loginFormSubmit = function () {
@@ -37,8 +45,13 @@ define(['../application',
                                         hold: 2000
                                     });
                                     $rootScope.$broadcast('customer.change');
-                                    $location.url('/home');
-                                    $rootScope.$broadcast('url.change');
+                                    if ($rootScope.currentId == data.id) {
+                                        $rootScope.$broadcast('url.change');
+                                        $location.url('/customer/info');
+                                    } else {
+                                        $rootScope.$broadcast('url.change');
+                                        $location.url('/home');
+                                    }
                                 }
                             }
                         ).error(function () {
@@ -55,8 +68,6 @@ define(['../application',
         ]).controller('RegisterCtrl', ['$scope', '$http', '$cookieStore', '$location', '$rootScope',
             function ($scope, $http, $cookieStore, $location, $rootScope) {
                 $rootScope.$broadcast('back.change', {url: '#/customer/login'});
-
-                //注册
                 $scope.doRegister = function () {
                     if ($scope.formRegister.$valid) {
                         var url = Settings.registerUrl;

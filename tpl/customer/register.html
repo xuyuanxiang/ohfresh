@@ -78,7 +78,6 @@
                 </div>
                 <div class="item-input">
                     <select name="country"
-                            ng-init="country = countries[0]"
                             ng-model="country"
                             ng-change="countryChange(country)"
                             ng-options="item.name for item in countries">
@@ -93,7 +92,6 @@
                 </div>
                 <div class="item-input">
                     <select name="province"
-                            ng-init="province = provinces[0]"
                             ng-model="province"
                             ng-change="provinceChange(province)"
                             ng-options="item.name for item in provinces">
@@ -108,7 +106,6 @@
                 </div>
                 <div class="item-input">
                     <select name="city"
-                            ng-init="city = cities[0]"
                             ng-model="city"
                             ng-change="cityChange(city)"
                             ng-options="item.name for item in cities">
@@ -123,7 +120,6 @@
                 </div>
                 <div class="item-input">
                     <select name="county"
-                            ng-init="county = counties[0]"
                             ng-model="county"
                             ng-options="item.name for item in counties">
                     </select>
@@ -137,7 +133,8 @@
                         详细地址：
                     </div>
                     <div class="item-input">
-                        <textarea ng-model="homeaddress" name="homeaddress"></textarea>
+                        <textarea ng-required="country || province || city || county" ng-model="homeaddress"
+                                  name="homeaddress"></textarea>
                     </div>
                 </div>
             </div>

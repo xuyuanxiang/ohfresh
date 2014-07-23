@@ -3,22 +3,38 @@ define(['../application',
     angular.module('ohFresh.home.controllers', ['ngRoute', 'ngCookies'])
         .controller('HomeCtrl', ['$scope', '$routeParams', '$cookieStore', '$http', '$rootScope', '$location',
             function ($scope, $routeParams, $cookieStore, $http, $rootScope, $location) {
+                $scope.customer = $cookieStore.get('customer');
+                if ($scope.customer) {
+                    $rootScope.$broadcast('customer.change');
+                }
+                OhFresh.slider('#advertisementContainer .slider-container', {
+                    pagination: '#advertisementContainer .slider-pagination',
+                    autoplay: 4000
+                });
                 $rootScope.$broadcast('url.change');
                 $rootScope.$broadcast('back.change', null);
-                $scope.time = new Date();
-                OhFresh.showPreloader();
-                var url = Settings.homeUrl;
-                $http.jsonp(url).success(function (data) {
-                    OhFresh.hidePreloader();
-                    $scope.channels = data;
-                }).error(function () {
-                    OhFresh.hidePreloader();
-                    OhFresh.addNotification({
-                        title: "提示",
-                        message: "系统连接失败！请稍后重试...",
-                        hold: 3000
+                $scope.list = function () {
+                    $scope.index = 0;
+                    OhFresh.showPreloader();
+                    var url = Settings.homeUrl;
+                    $http.jsonp(url).success(function (data) {
+                        OhFresh.hidePreloader();
+                        $scope.channels = data;
+                    }).error(function () {
+                        OhFresh.hidePreloader();
+                        OhFresh.addNotification({
+                            title: "提示",
+                            message: "系统连接失败！请稍后重试...",
+                            hold: 3000
+                        });
                     });
-                });
+                };
+                $scope.list();
+                $scope.redToDetail = function (product) {
+                    $rootScope.$broadcast('back.change', {url: '#/home' + new Date().getMilliseconds()});
+                    $scope.currentProduct = product;
+                    $scope.index = 1;
+                };
                 $scope.addToCart = function (productIns) {
                     if (!productIns.price) {
                         OhFresh.addNotification({
@@ -69,6 +85,10 @@ define(['../application',
                     cart.push(product);
                     $cookieStore.put('cart', cart);
                     $location.url('/order/create?id=' + product.id);
+                };
+                $scope.selectProductIns = function (productins) {
+                    $scope.currentProductIns = productins;
+                    $scope.currentProductIns.num = 1;
                 }
             }
         ]

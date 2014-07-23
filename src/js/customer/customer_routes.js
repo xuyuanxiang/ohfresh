@@ -2,7 +2,7 @@ define(['./customer_controllers'], function () {
     angular.module('ohFresh.customer', ['ngRoute', 'ohFresh.customer.controllers'])
         .config(['$routeProvider',
             function ($routeProvider) {
-                $routeProvider.when('/customer/login', {
+                $routeProvider.when('/login', {
                     templateUrl: 'tpl/customer/login.html',
                     controller: 'LoginCtrl'
                 });

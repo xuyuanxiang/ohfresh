@@ -66,23 +66,11 @@
         </li>
     </ul>
 </div>
-<form name="orderCreateForm" ng-submit="checkOut(total().products)">
-    <div ng-show="products && products.length>0" class="content-block-title">配送方式</div>
-    <div ng-show="products && products.length>0" class="list-block media-list">
+<form ng-show="products && products.length>0" name="orderCreateForm" ng-submit="checkOut(total().products)">
+    <div class="content-block-title">配送信息</div>
+    <div class="list-block media-list">
         <ul>
-            <li class="item-content">
-                <div class="item-inner">
-                    <div class="item-input">
-                        <select name="deliverWay" ng-model="deliver" ng-init="deliver=0">
-                            <option value="0">快递</option>
-
-                            <option ng-show="customer" value="1">自取</option>
-                        </select>
-                    </div>
-                </div>
-            </li>
-
-            <li ng-show="deliver == 0 && customer.addressId">
+            <li ng-show="defaultAddress">
                 <a href="#/address?from=order.create" class="item-link item-content external">
                     <div class="item-inner">
                         <div class="item-title-row">
@@ -100,13 +88,7 @@
                     </div>
                 </a>
             </li>
-        </ul>
-    </div>
-    <div class="list-block" ng-show="deliver == 0 && !customer.addressId">
-
-        <ul>
-            <li class="item-divider">配送信息</li>
-            <li class="item-content">
+            <li ng-show="!defaultAddress" class="item-content">
                 <div class="item-inner">
                     <div class="item-title label">
                         收货人：
@@ -120,7 +102,7 @@
                     </div>
                 </div>
             </li>
-            <li class="item-content">
+            <li ng-show="!defaultAddress" class="item-content">
                 <div class="item-inner">
                     <div class="item-title label">
                         手机号：
@@ -134,7 +116,7 @@
                     </div>
                 </div>
             </li>
-            <li ng-show="countries.length>0" class="item-content">
+            <li ng-show="!defaultAddress && countries.length>0" class="item-content">
                 <div class="item-inner">
                     <div class="item-title label">
                         国家：
@@ -148,7 +130,7 @@
                     </div>
                 </div>
             </li>
-            <li ng-show="provinces.length>0" class="item-content">
+            <li ng-show="!defaultAddress && provinces.length>0" class="item-content">
                 <div class="item-inner">
                     <div class="item-title label">
                         省市：
@@ -162,7 +144,7 @@
                     </div>
                 </div>
             </li>
-            <li ng-show="cities.length>0" class="item-content">
+            <li ng-show="!defaultAddress && cities.length>0" class="item-content">
                 <div class="item-inner">
                     <div class="item-title label">
                         州市：
@@ -176,7 +158,7 @@
                     </div>
                 </div>
             </li>
-            <li ng-show="counties.length>0" class="item-content">
+            <li ng-show="!defaultAddress && counties.length>0" class="item-content">
                 <div class="item-inner">
                     <div class="item-title label">
                         区县：
@@ -189,7 +171,7 @@
                     </div>
                 </div>
             </li>
-            <li class="item-content align-top">
+            <li ng-show="!defaultAddress" class="item-content align-top">
                 <div class="item-inner">
                     <div class="item-title label">
                         详细地址：
@@ -204,7 +186,6 @@
                 </div>
             </li>
         </ul>
-
     </div>
 
     <div ng-show="total().num>0" class="content-block-title">
