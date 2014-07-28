@@ -15,9 +15,11 @@ ohFresh|探鲜家 买家版
 ## 运行
 
   * 首先，使用[Git](http://git-scm.com/)(版本控制工具)克隆，或者点击[下载](https://github.com/xuyuanxiang/ohfresh/archive/master.zip)至本地；
-  ```
+
+    ```
       $ git clone https://github.com/xuyuanxiang/ohfresh_admin.git
-  ```
+    ```
+
   * 然后，打开Windows命令行工具CMD，进入到项目目录下，依次键入以下两个命令，等待至安装完成；
   ```
       $ npm install
