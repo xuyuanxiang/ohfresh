@@ -6,12 +6,10 @@ ohFresh|探鲜家买家版前端工程。
 
 ## 依赖
 
-  * NodeJS (http://nodejs.org/)
-  * Grunt (http://gruntjs.com/)
-  * Bower (http://bower.io/)
-  * 任意一个你所喜爱的编辑器(
-    ** 推荐
-        *** WebStorm http://www.jetbrains.com/webstorm/)
+  * [NodeJS](http://nodejs.org/)
+  * [Grunt](http://gruntjs.com/)
+  * [Bower](http://bower.io/)
+  * 任意一个你所喜爱的编辑器(推荐:[WebStorm](http://www.jetbrains.com/webstorm/))
 
 ## 运行
 
