@@ -14,7 +14,7 @@ ohFresh|探鲜家 买家版
   * IDE(集成开发环境，推荐:[WebStorm](http://www.jetbrains.com/webstorm/))，或者任意一个你所喜爱的编辑器 + 操作系统命令行工具
 
 #### 工具安装：
-  * NodeJS安装：官网首页点击“INSTALL”按钮下载，下载完成后双击.exe文件，点击“下一步”直至完成；
+  * NodeJS安装：[NodeJS官网首页](http://nodejs.org/)点击“INSTALL”按钮下载，下载完成后双击.exe文件，点击“下一步”直至完成；
   * Grunt安装： NodeJS安装完成后，打开Window命令行工具(CMD)，键入如下命令，等待至安装完成；
 
     ```
