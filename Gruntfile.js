@@ -61,7 +61,8 @@ module.exports = function (grunt) {
             style: {
                 src: [
                     'css/<%= pkg.name %>-<%= pkg.version %>.min.css',
-                    'bower_components/fontawesome/css/font-awesome.min.css'
+                    'bower_components/fontawesome/css/font-awesome.min.css',
+                    'bower_components/animate-css/animate.min.css'
                 ],
                 dest: 'dist/css/<%= pkg.name %>-<%= pkg.version %>-all.min.css'
             }

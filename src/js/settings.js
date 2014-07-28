@@ -1,5 +1,5 @@
 define([], function () {
-    var baseUrl = 'http://192.168.0.127:8080/tjpowermgm/';
+    var baseUrl = 'http://192.168.0.103:8080/tjpowermgm/';
     return {
         loginUrl: baseUrl + 'customers?callback=JSON_CALLBACK',
         registerUrl: baseUrl + 'customer/save?callback=JSON_CALLBACK',

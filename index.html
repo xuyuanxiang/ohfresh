@@ -22,6 +22,7 @@
     <script src="bower_components/respond/src/respond.js"></script>
     <link rel="stylesheet" href="css/ohfresh-0.0.1.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/animate-css/animate.min.css">
 </head>
 <body class="init">
 <div class="statusbar-overlay"></div>
@@ -75,9 +76,8 @@
                     <i class="icon fa fa-2x fa-home"></i>
                     <span class="tabbar-label">主页</span>
                 </a>
-                <a ng-show="!hasLogin" ng-class="currentHref.indexOf('/customer/login')!=-1?'active':''"
-                   href="#/login"
-                   class="tab-link external">
+                <a href="#/login" ng-show="!hasLogin" ng-class="currentHref.indexOf('/login')!=-1?'active':''"
+                   class="tab-link external" ng-click="showLogin=true">
                     <i class="icon fa fa-2x fa-user"></i>
                     <span class="tabbar-label">登录</span>
                 </a>
@@ -105,6 +105,7 @@
     <!-- ./view view-main -->
 </div>
 <!-- ./views -->
+
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/framework7/dist/js/framework7.min.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>

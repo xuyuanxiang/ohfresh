@@ -26,6 +26,7 @@
     "bootstrap": "~3.2.0",
     "bootflat": "*",
     "modernizr": "~2.8.3",
-    "respond": "~1.4.2"
+    "respond": "~1.4.2",
+    "animate-css": "~3.2.0"
   }
 }

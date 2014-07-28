@@ -36,7 +36,7 @@ define(['../application',
                     $scope.index = 1;
                 };
                 $scope.addToCart = function (productIns) {
-                    if (!productIns.price) {
+                    if (!productIns || !productIns.price) {
                         OhFresh.addNotification({
                             title: "提示",
                             message: "请选择要购买的产品类型！",
@@ -71,9 +71,10 @@ define(['../application',
                         });
                     }
                     $rootScope.$broadcast('carts.change');
+                    return flag;
                 };
                 $scope.createOrder = function (product) {
-                    if (!product.price) {
+                    if (!product || !product.price) {
                         OhFresh.addNotification({
                             title: "提示",
                             message: "请选择要购买的产品类型！",
@@ -89,6 +90,9 @@ define(['../application',
                 $scope.selectProductIns = function (productins) {
                     $scope.currentProductIns = productins;
                     $scope.currentProductIns.num = 1;
+                }
+                $scope.closeBuyPop = function () {
+                    $scope.currentProductIns = null;
                 }
             }
         ]

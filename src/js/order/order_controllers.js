@@ -30,13 +30,14 @@ define(['../application',
                     var products = [];
                     angular.forEach($scope.products, function (product) {
                         if (product.checked) {
-                            totalPrice += Number(product.num) * Number(product.price);
+                            product.freight = $scope.freight ? Number($scope.freight) : 0;
+                            totalPrice += Number(product.num) * Number(product.price) + Number(product.freight);
                             totalNum += 1;
                             products.push(product);
                         }
                     });
                     return {
-                        price: totalPrice,
+                        price: totalPrice + ($scope.freight ? Number($scope.freight) : 0),
                         num: totalNum,
                         products: products
                     };
@@ -86,6 +87,7 @@ define(['../application',
                     url += "&provinceId=" + provinceId;
                     url += "&cityId=" + cityId;
                     url += "&countyId=" + countyId;
+                    url += "&memo=" + ($scope.memo ? $scope.memo : '');
                     var homeaddress = $scope.assemblename ? $scope.assemblename : address.assemblename;
                     if (countryId && !$scope.country) {
                         angular.forEach($rootScope.countries, function (value) {
@@ -148,6 +150,30 @@ define(['../application',
                         OhFresh.hideIndicator();
                     });
                 };
+                $scope.goToSetp3 = function () {
+                    if (!$rootScope.defaultAddress) {
+                        var country = $scope.country ? $scope.country.name : '';
+                        var province = $scope.province ? $scope.province.name : '';
+                        var city = $scope.city ? $scope.city.name : '';
+                        var county = $scope.county ? $scope.county.name : '';
+                        $scope.currentAddress = {};
+                        $scope.currentAddress.assemblename = country + province + city + county + ($scope.assemblename ? $scope.assemblename : '');
+                        $scope.currentAddress.mobilephone = $scope.mobilephone ? $scope.mobilephone : "";
+                        $scope.currentAddress.name = $scope.name ? $scope.name : "";
+                    } else {
+                        $scope.currentAddress = $rootScope.defaultAddress;
+                    }
+                    if (!$scope.currentAddress.assemblename || !$scope.currentAddress.mobilephone || !$scope.currentAddress.name) {
+                        OhFresh.addNotification({
+                            title: "提示",
+                            message: "请先填写并完善配送信息！",
+                            hold: 3000
+                        });
+                    } else {
+                        $scope.step = 3;
+                    }
+
+                }
             }
         ]);
 });

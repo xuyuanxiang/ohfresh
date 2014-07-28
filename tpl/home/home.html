@@ -18,96 +18,103 @@
             <div class="slider-pagination"></div>
         </div>
     </div>
-    <!--<div id="channelContainer">-->
-    <!--<div class="content-block-title" ng-repeat-start="channel in channels">-->
-    <!--{{channel.name}}-->
-    <!--</div>-->
-    <!--<div class="list-block media-list" ng-repeat-end ng-repeat="item in channel.items">-->
-    <!--<ul>-->
-    <!--<li class="item-divider">-->
-    <!--{{item.name}}-->
-    <!--</li>-->
-    <!--<li ng-repeat="product in item.products">-->
-    <!--<div class="item-content">-->
-    <!--<div class="item-media">-->
-    <!--<img ng-src="{{product.code}}">-->
-    <!--</div>-->
-    <!--<div class="item-inner">-->
-    <!--<div class="item-title-row">-->
-    <!--<div class="item-title">Element title</div>-->
-    <!--<div class="item-after">Element label</div>-->
-    <!--</div>-->
-    <!--<div class="item-subtitle">Subtitle</div>-->
-    <!--<div class="item-text">Additional description text</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</li>-->
-    <!--</ul>-->
-    <!--</div>-->
-    <!--</div>-->
+
     <div id="channelContainer">
-        <div class="content-block-title" ng-repeat-start="channel in channels">
-            <span class="fa fa-leaf"></span> {{channel.name}}
-        </div>
-        <div class="list-block media-list" ng-repeat-end ng-repeat="item in channel.items">
-            <ul>
-                <li class="item-divider">
-                    {{item.name}}
-                </li>
-                <li class="item-content" ng-repeat="product in item.products">
-                    <div class="item-inner">
+        <div ng-repeat="channel in channels" style="clear: both;">
+            <h3><span class="fa fa-leaf"></span> {{channel.name}}</h3>
+
+            <div class="content-block-title" ng-repeat-start="item in channel.items" style="clear: both;">
+                {{item.name}}
+            </div>
+            <div class="product-list content-block" ng-repeat-end style="clear: both;">
+                <div class="product-item" ng-repeat="product in item.products">
+                    <div class="thumbnail">
                         <a ng-click="redToDetail(product)">
                             <img class="item-media-object" ng-src="{{product.code}}">
                         </a>
-                        <a ng-click="redToDetail(product)" class="item-title-row">
-                            <div class="item-title">{{product.name}}</div>
-                            <div class="item-after">
-                                <i class="fa fa-yen price-input" ng-show="currentProductIns.price">
-                                    {{currentProductIns.price * currentProductIns.num}}
-                                </i>
-                            </div>
-                        </a>
 
-                        <div class="input-group" style="margin-top: 10px">
-
-                            <select class="input" name="productins"
-                                    ng-model="currentProductIns"
-                                    ng-change="currentProductIns.num = 1"
-                                    ng-options="child.name for child in product.children">
-                                <option value="">----请选择产品类型----</option>
-                            </select>
-
-                            <div class="input-group-btn">
-                                <span class="fa fa-angle-double-down"></span>
-                            </div>
-                        </div>
-                        <div class="input-group" style="margin-top: 10px">
-                            <div class="input-group-btn">
-                                <button class="btn-minus"
-                                        ng-click="currentProductIns.num = currentProductIns.num>1?currentProductIns.num-1:currentProductIns.num">
-                                    <span class="fa fa-minus"></span>
-                                </button>
-                            </div>
-                            <input ng-init="currentProductIns.num=1" ng-model="currentProductIns.num" class="input"
-                                   type="number" min="1"/>
-
-                            <div class="input-group-btn">
-                                <button class="btn-plus" ng-click="currentProductIns.num=currentProductIns.num+1">
-                                    <span class="fa fa-plus"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <p class="buttons-row">
-                            <a ng-click="addToCart(currentProductIns)" class="button button-red btn-cart">
+                        <div class="caption">
+                            <a class="title" ng-click="redToDetail(product)">{{product.name}}</a>
+                            <p>
+                                {{product.memo ? product.memo : '精选水果'}}
+                            </p>
+                            <a ng-click="showBuy=true;showBuyInit=true;"
+                               class="button button-round button-cancel"
+                               role="button">
                                 <i class="fa fa-shopping-cart"></i>
-                                放入购物车
+                                 购买
                             </a>
-                            <a ng-click="createOrder(currentProductIns)"
-                               class="button button-red button-cancel btn-buy">立即购买</a>
-                        </p>
+                        </div>
                     </div>
-                </li>
-            </ul>
+                    <div class="popup-buy-overlay" ng-show="showBuy"></div>
+                    <div class="popup-buy" ng-show="showBuyInit"
+                         ng-class="showBuy?'animated bounceInUp':'animated bounceOutDown'" style="clear: both;">
+                        <div class="list-block">
+                            <ul>
+                                <li class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title">
+                                            {{product.name}}
+                                        </div>
+                                        <div class="item-after">
+                                            <a ng-click="showBuy = false;closeBuyPop();">
+                                                <span class="fa fa-times"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li ng-repeat="child in product.children">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="productins" ng-click="selectProductIns(child)"
+                                               ng-value="child.id">
+
+                                        <div class="item-inner">
+                                            <div class="item-title">{{child.name}}</div>
+                                            <div class="item-after">
+                                                <span class="fa fa-yen">{{child.price}}</span>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </li>
+                                <li class="item-content">
+                                    <div class="item-title label">
+                                        数量：
+                                    </div>
+                                    <div class="item-input">
+                                        <div class="input-group" style="margin-top: 8px;">
+                                            <div class="input-group-btn">
+                                                <button class="btn-minus"
+                                                        ng-click="currentProductIns.num = currentProductIns.num>1?currentProductIns.num-1:currentProductIns.num">
+                                                    <span class="fa fa-minus"></span>
+                                                </button>
+                                            </div>
+                                            <input ng-init="currentProductIns.num=1" ng-model="currentProductIns.num"
+                                                   class="input"
+                                                   type="number" min="1"/>
+
+                                            <div class="input-group-btn">
+                                                <button class="btn-plus"
+                                                        ng-click="currentProductIns.num=currentProductIns.num+1">
+                                                    <span class="fa fa-plus"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="buttons-row" style="margin-top: 10px">
+                                    <a ng-click="addToCart(currentProductIns)"
+                                       class="button button-big button-red btn-cart">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        放入购物车
+                                    </a>
+                                    <a ng-click="createOrder(currentProductIns)"
+                                       class="button button-red button-cancel btn-buy button-big">立即购买</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -136,6 +143,9 @@
 
                     <div class="item-inner">
                         <div class="item-title">{{child.name}}</div>
+                        <div class="item-after">
+                            <i class="fa fa-yen"> {{child.price}}</i>
+                        </div>
                     </div>
                 </label>
             </li>
@@ -176,12 +186,12 @@
             </li>
         </ul>
         <p class="buttons-row">
-            <a ng-click="addToCart(currentProductIns)" class="button button-red btn-cart">
+            <a ng-click="addToCart(currentProductIns)" class="button button-big button-red btn-cart">
                 <i class="fa fa-shopping-cart"></i>
                 放入购物车
             </a>
             <a ng-click="createOrder(currentProductIns)"
-               class="button button-red button-cancel btn-buy">立即购买</a>
+               class="button button-red button-big button-cancel btn-buy">立即购买</a>
         </p>
     </div>
 </div>
