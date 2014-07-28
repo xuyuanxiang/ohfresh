@@ -10,7 +10,7 @@ ohFresh|探鲜家 买家版
   * [NodeJS](http://nodejs.org/)
   * [Grunt](http://gruntjs.com/)
   * [Bower](http://bower.io/)
-  * 任意一个你所喜爱的编辑器(推荐:[WebStorm](http://www.jetbrains.com/webstorm/))
+  * IDE(推荐:[WebStorm](http://www.jetbrains.com/webstorm/))，或者任意一个你所喜爱的编辑器 + 操作系统命令行工具
 
 ## 运行
 
