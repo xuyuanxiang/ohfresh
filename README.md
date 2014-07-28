@@ -16,9 +16,7 @@ ohFresh|探鲜家买家版前端工程。
 ## 运行
 
   * 克隆或者下载项目
-  ```
       $ git clone https://github.com/xuyuanxiang/ohfresh_admin.git
-  ```
   * 安装项目依赖
   ```
       $ npm install
