@@ -14,7 +14,7 @@ ohFresh|探鲜家 买家版
 
 ## 运行
 
-#### 在Window命令行工具(CMD)下：
+##### 使用Window命令行工具(CMD)：
 
   * 键入如下命令，使用[Git](http://git-scm.com/)(版本控制工具)克隆至本地，或者直接[下载](https://github.com/xuyuanxiang/ohfresh/archive/master.zip)；
 
