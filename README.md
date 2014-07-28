@@ -33,7 +33,7 @@ ohFresh|探鲜家 买家版
   * 键入如下命令，使用[Git](http://git-scm.com/)(版本控制工具)克隆至本地，或者直接[下载](https://github.com/xuyuanxiang/ohfresh/archive/master.zip)；
 
     ```
-      $ git clone https://github.com/xuyuanxiang/ohfresh_admin.git
+      $ git clone https://github.com/xuyuanxiang/ohfresh.git
     ```
 
   * 进入到项目目录下，依次键入如下两个命令，等待至项目依赖安装完成；
